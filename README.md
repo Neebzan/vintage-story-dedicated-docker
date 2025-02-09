@@ -4,7 +4,7 @@
 A simple image to run Vintage Story using docker. The container will download the server files with the given version number.
 
 ## Setup
-The setup requires only a directory for the saves file, config files and logs to be defined. This mount can be done simply by mounting to `app/data`.
+The setup requires a directory for the saves file, config files and logs to be defined, as well as a user with write access to this directory. That user's UID and GID must be set in the user parameter for the container. The mount should target `app/data`.
 
 ### Running with compose
 ```
@@ -19,6 +19,7 @@ services:
       - vintage-story-game-files:/app/server  # Docker-managed named volume
     environment:
       - VERSION=1.20.3
+    user: "1000:1000"
 volumes:
   vintage-story-game-files:
 ```
@@ -32,6 +33,7 @@ docker run -d \
   -v /path/on/host:/app/data \
   -v vintage-story-game-files:/app/server \
   -e VERSION=1.20.3 \
+  --user 1000:1000 \
   neebz/vintage-story-server:latest
 ```
 
