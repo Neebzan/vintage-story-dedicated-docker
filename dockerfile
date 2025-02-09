@@ -1,14 +1,14 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
-ARG UID=1001
-ARG GID=1001
+ARG UID=1000 
+ARG GID=1000 
 
 RUN apt-get update && apt-get install -y \
     bash wget screen procps
 
 RUN apt-get update && apt-get install -y jq
 
-# Create group and user without conflicting options
+# Create group and user with matching UID/GID
 RUN addgroup --gid $GID vintagestory && \
     adduser --uid $UID --gid $GID --system vintagestory
 
