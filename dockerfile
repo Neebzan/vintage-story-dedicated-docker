@@ -1,12 +1,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
+ARG UID=1001
+ARG GID=1001
+
 RUN apt-get update && apt-get install -y \
     bash wget screen procps
 
 RUN apt-get update && apt-get install -y jq
 
-RUN addgroup --system vintagestory && \
-    adduser --system --ingroup vintagestory vintagestory
+RUN addgroup --gid $GID vintagestory && \
+    adduser --uid $UID --gid $GID --system --ingroup vintagestory vintagestory
 
 RUN mkdir -p /app/data /app/server && \
     chown -R vintagestory:vintagestory /app/data /app/server

@@ -9,5 +9,6 @@ services:
       - vintage-story-game-files:/app/server  # Docker-managed named volume
     environment:
       - VERSION=1.20.3
+    user: "1000:1000"
 volumes:
   vintage-story-game-files:
