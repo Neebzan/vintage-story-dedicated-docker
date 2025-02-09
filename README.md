@@ -38,9 +38,9 @@ docker run -d \
 ```
 
 ## Editing the config
-Configuration of the server takes place within the `app/data` mount in `serverconfig.json`, hence the lack of env other variables.
+Configuration of the server takes place within the `app/data` mount in `serverconfig.json`.
 
-Configs are explained in the official Vintage Story documentation here https://wiki.vintagestory.at/Server_Config
+Configs are explained in the official Vintage Story documentation here https://wiki.vintagestory.at/Server_Config.
 
 To get started I recommend setting the following configs:
 * `ServerName`
