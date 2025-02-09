@@ -13,8 +13,10 @@ RUN mkdir -p /app/data /app/server && \
 
 WORKDIR /app/server
 
-RUN wget https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_1.20.3.tar.gz && \
-    tar xzf vs_server_linux-x64_1.20.3.tar.gz && \
+ENV VERSION "1.20.3"
+
+RUN wget https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_${VERSION}.tar.gz && \
+    tar xzf vs_server_linux-x64_${VERSION}.tar.gz && \
     chmod +x server.sh
 
 RUN sed -i "s|^USERNAME='.*'|USERNAME='vintagestory'|" server.sh && \
@@ -28,4 +30,3 @@ RUN chmod +x /app/server/entrypoint.sh
 USER vintagestory
 
 ENTRYPOINT ["/app/server/entrypoint.sh"]
-

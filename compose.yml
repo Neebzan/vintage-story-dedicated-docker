@@ -7,5 +7,7 @@ services:
     volumes:
       - /path/on/host:/app/data
       - vintage-story-game-files:/app/server  # Docker-managed named volume
+    environment:
+      - VERSION=1.20.3
 volumes:
   vintage-story-game-files:
