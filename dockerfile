@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get update && apt-get install -y jq
 
+# Create group and user without conflicting options
 RUN addgroup --gid $GID vintagestory && \
-    adduser --uid $UID --gid $GID --system --ingroup vintagestory vintagestory
+    adduser --uid $UID --gid $GID --system vintagestory
 
 RUN mkdir -p /app/data /app/server && \
     chown -R vintagestory:vintagestory /app/data /app/server
