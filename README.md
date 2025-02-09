@@ -1,7 +1,7 @@
 # vintage-story-dedicated-docker
 
 ## Description
-A simple image to run Vintage Story using docker. The container will download the game, and update upon restart.
+A simple image to run Vintage Story using docker. The container will download the server files with the given version number.
 
 ## Setup
 The setup requires only a directory for the saves file, config files and logs to be defined. This mount can be done simply by mounting to `app/data`.
@@ -17,6 +17,8 @@ services:
     volumes:
       - /path/on/host:/app/data
       - vintage-story-game-files:/app/server  # Docker-managed named volume
+    environment:
+      - VERSION=1.20.3
 volumes:
   vintage-story-game-files:
 ```
@@ -29,11 +31,12 @@ docker run -d \
   -p 42420:42420/udp \
   -v /path/on/host:/app/data \
   -v vintage-story-game-files:/app/server \
+  -e VERSION=1.20.3 \
   neebz/vintage-story-server:latest
 ```
 
 ## Editing the config
-Configuration of the server takes place within the `app/data` mount in `serverconfig.json`, hence the lack of env variables.
+Configuration of the server takes place within the `app/data` mount in `serverconfig.json`, hence the lack of env other variables.
 
 Configs are explained in the official Vintage Story documentation here https://wiki.vintagestory.at/Server_Config
 
