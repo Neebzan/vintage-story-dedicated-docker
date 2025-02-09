@@ -1,9 +1,9 @@
 services:
   vintage_story:
-    image: localdocker/vintage_story:0.4
+    image:  neebz/vintage-story-server:latest
     ports:
       - "42420:42420/tcp"
       - "42420:42420/udp"
-    volumes:
-      - :/app/data # for configuring server, reading logs, backing up saves etc.
+    # volumes:
+    #   - :/app/data # for configuring server, reading logs, backing up saves etc.
     
