@@ -15,7 +15,6 @@ LOG_FILE="$DATA_DIR/Logs/server-main.log"
 LOG_DIR="$DATA_DIR/Logs"
 
 
-
 mkdir -p "$GAME_DIR" "$DATA_DIR" "$LOG_DIR"
 
 if [ ! -f "$GAME_DIR/$GAME_ARCHIVE" ]; then
