@@ -4,7 +4,7 @@ ARG UID=1000
 ARG GID=1000 
 
 RUN apt-get update && apt-get install -y \
-    bash wget screen procps
+    bash screen procps curl
 
 RUN apt-get update && apt-get install -y jq
 

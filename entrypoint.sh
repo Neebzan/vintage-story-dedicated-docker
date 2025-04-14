@@ -8,26 +8,19 @@ fi
 
 GAME_URL="https://cdn.vintagestory.at/gamefiles/stable"
 GAME_ARCHIVE="vs_server_linux-x64_${VERSION}.tar.gz"
-GAME_DIR="/app/server"
+GAME_DIR="/app/server/$VERSION"
 DATA_DIR="/app/data"
 ASSETS_DIR="$GAME_DIR/assets"
 LOG_FILE="$DATA_DIR/Logs/server-main.log"
 LOG_DIR="$DATA_DIR/Logs"
 
-tail_log() {
-    echo "Tailing the log file: $LOG_FILE"
-    tail -F "$LOG_FILE"
-}
+
 
 mkdir -p "$GAME_DIR" "$DATA_DIR" "$LOG_DIR"
 
 if [ ! -f "$GAME_DIR/$GAME_ARCHIVE" ]; then
-    if [ -d "$ASSETS_DIR" ]; then
-        echo "Deleting old assets folder..."
-        rm -rf "$ASSETS_DIR"
-    fi
     echo "Downloading new game version: $VERSION..."
-    wget -q --show-progress -O "$GAME_DIR/$GAME_ARCHIVE" "$GAME_URL/$GAME_ARCHIVE"
+    curl -# -o "$GAME_DIR/$GAME_ARCHIVE" "$GAME_URL/$GAME_ARCHIVE"
     
     echo "Extracting game files..."
     tar xzf "$GAME_DIR/$GAME_ARCHIVE" -C "$GAME_DIR"
@@ -41,6 +34,11 @@ fi
 sed -i "s|^USERNAME='.*'|USERNAME='vintagestory'|" "$GAME_DIR/server.sh"
 sed -i "s|^VSPATH='.*'|VSPATH='$GAME_DIR'|" "$GAME_DIR/server.sh"
 sed -i "s|^DATAPATH='.*'|DATAPATH='$DATA_DIR'|" "$GAME_DIR/server.sh"
+
+tail_log() {
+    echo "Tailing the log file: $LOG_FILE"
+    tail -F "$LOG_FILE"
+}
 
 # Start server
 echo "Starting server..."
