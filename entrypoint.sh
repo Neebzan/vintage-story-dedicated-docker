@@ -6,9 +6,13 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-# Set channel to stable if not set
-CHANNEL=${CHANNEL:-stable}
+if [ -z "$CHANNEL" ]; then
+    echo "ERROR: CHANNEL environment variable is not set."
+    exit 1
+fi
 
+
+# Set channel to stable if not set
 # Set the game URL depending on the channel
 GAME_URL="https://cdn.vintagestory.at/gamefiles/$CHANNEL"
 GAME_ARCHIVE="vs_server_linux-x64_${VERSION}.tar.gz"
