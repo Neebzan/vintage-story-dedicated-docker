@@ -6,7 +6,15 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-GAME_URL="https://cdn.vintagestory.at/gamefiles/stable"
+if [ -z "$CHANNEL" ]; then
+    echo "ERROR: CHANNEL environment variable is not set."
+    exit 1
+fi
+
+
+# Set channel to stable if not set
+# Set the game URL depending on the channel
+GAME_URL="https://cdn.vintagestory.at/gamefiles/$CHANNEL"
 GAME_ARCHIVE="vs_server_linux-x64_${VERSION}.tar.gz"
 GAME_DIR="/app/server/$VERSION"
 DATA_DIR="/app/data"
@@ -14,19 +22,17 @@ ASSETS_DIR="$GAME_DIR/assets"
 LOG_FILE="$DATA_DIR/Logs/server-main.log"
 LOG_DIR="$DATA_DIR/Logs"
 
-
 mkdir -p "$GAME_DIR" "$DATA_DIR" "$LOG_DIR"
 
 if [ ! -f "$GAME_DIR/$GAME_ARCHIVE" ]; then
-    echo "Downloading new game version: $VERSION..."
+    echo "Downloading new game version: $VERSION from channel $CHANNEL..."
     curl -# -o "$GAME_DIR/$GAME_ARCHIVE" "$GAME_URL/$GAME_ARCHIVE"
-    
+
     echo "Extracting game files..."
     tar xzf "$GAME_DIR/$GAME_ARCHIVE" -C "$GAME_DIR"
     chmod +x "$GAME_DIR/server.sh"
 else
     echo "Game version $VERSION already downloaded."
-
 fi
 
 # Ensure correct paths in server.sh
@@ -69,5 +75,3 @@ while true; do
 
     sleep 1
 done
-
-

@@ -8,7 +8,8 @@ services:
       - /path/on/host:/app/data
       - vintage-story-game-files:/app/server  # Docker-managed named volume
     environment:
-      - VERSION=1.20.3
+      - VERSION=1.21.0-rc.1
+      - CHANNEL=unstable
     user: "1000:1000"
 volumes:
   vintage-story-game-files:
