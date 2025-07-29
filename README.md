@@ -5,6 +5,12 @@ A simple image to run Vintage Story using docker. The container will download th
 
 The image also supports running unstable versions of the game using the `CHANNEL` envrionment. The value must match either `stable` or `unstable`.
 
+## Image
+The image and it's tags are found here: https://hub.docker.com/repository/docker/neebz/vintage-story-server/general
+
+Version `2025.07.28-1` and later have been updated to dotnet 8 to follow the game version >= 1.21.
+If you want to play < 1.21 you should stay on tag `2025.04.14-1`. Note that this version does NOT support the `CHANNEL` environment variable.
+
 ## Setup
 The setup requires a directory for the saves file, config files and logs to be defined, as well as a user with write access to this directory. That user's UID and GID must be set in the user parameter for the container. The mount should target `app/data`.
 
