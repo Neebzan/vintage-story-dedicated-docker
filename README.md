@@ -2,7 +2,8 @@
 
 ## Description
 A simple image to run Vintage Story using docker. The container will download the server files with the given version number.
-Support for stable and unstable versions of the game
+
+The image also supports running unstable versions of the game using the `CHANNEL` envrionment. The value must match either `stable` or `unstable`.
 
 ## Setup
 The setup requires a directory for the saves file, config files and logs to be defined, as well as a user with write access to this directory. That user's UID and GID must be set in the user parameter for the container. The mount should target `app/data`.
