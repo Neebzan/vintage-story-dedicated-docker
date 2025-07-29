@@ -1,4 +1,4 @@
-# vintage-story-dedicated-docker
+# vintage-story-server
 
 ## Description
 A simple image to run Vintage Story using docker. The container will download the server files with the given version number.
