@@ -51,5 +51,5 @@ To get started I recommend setting the following configs:
 * `ServerDescription`
 * `WelcomeMessage`
 * `Password`
-* `WorldConfig.SaveFileLocation` -- if you want to use an existing save
+* `WorldConfig.SaveFileLocation` if you want to use an existing save or simply name the save that the server will generate
 * `WhitelistMode` set to `off` if you want to rely only on password protection
