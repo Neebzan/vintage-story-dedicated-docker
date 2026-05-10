@@ -9,7 +9,8 @@ The image also supports running unstable versions of the game using the `CHANNEL
 The image and it's tags are found here: https://hub.docker.com/repository/docker/neebz/vintage-story-server/general
 
 Version `2026.05.10-1` and later have been updated to dotnet 10 to follow the game version >= 1.22. If you want to play < 1.21 you should stay on tag `2025.07.28-1`.
-Note that this version does NOT support the `CHANNEL` environment variable, and it requires the Docker Run `user` to be 1000. Version `2026.05.10-1` is updated to mount both download and server files to game files with a bind mount to ensure user privileges work as intended.
+Note that this version requires the Docker Run `user` to be 1000.
+Version `2026.05.10-1` is updated to mount both download and server files to game files with a bind mount to ensure user privileges work as intended.
 
 Version `2025.07.28-1` and later have been updated to dotnet 8 to follow the game version >= 1.21.
 If you want to play < 1.21 you should stay on tag `2025.04.14-1`. Note that this version does NOT support the `CHANNEL` environment variable.
