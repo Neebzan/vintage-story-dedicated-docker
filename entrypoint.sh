@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Ensure VERSION is set
 if [ -z "$VERSION" ]; then
     echo "ERROR: VERSION environment variable is not set."
     exit 1
@@ -11,43 +10,42 @@ if [ -z "$CHANNEL" ]; then
     exit 1
 fi
 
-
-# Set channel to stable if not set
-# Set the game URL depending on the channel
+# Download location
 GAME_URL="https://cdn.vintagestory.at/gamefiles/$CHANNEL"
 GAME_ARCHIVE="vs_server_linux-x64_${VERSION}.tar.gz"
-GAME_DIR="/app/server/$VERSION"
-DATA_DIR="/app/data"
-ASSETS_DIR="$GAME_DIR/assets"
-LOG_FILE="$DATA_DIR/Logs/server-main.log"
-LOG_DIR="$DATA_DIR/Logs"
+# Downloaded files dir
+GAME_FILES_DIR="/app/game_files"
+GAME_VERSION_DIR="$GAME_FILES_DIR/$VERSION"
+ASSETS_DIR="$GAME_VERSION_DIR/assets"
+# Server config files dir
+SERVER_FILES_DIR="/app/server_files"
+LOG_DIR="$SERVER_FILES_DIR/Logs"
+LOG_FILE="$SERVER_FILES_DIR/Logs/server-main.log"
 
-mkdir -p "$GAME_DIR" "$DATA_DIR" "$LOG_DIR"
+mkdir -p "$GAME_VERSION_DIR" "$SERVER_FILES_DIR" "$LOG_DIR"
 
-if [ ! -f "$GAME_DIR/$GAME_ARCHIVE" ]; then
+if [ ! -f "$GAME_VERSION_DIR/$GAME_ARCHIVE" ]; then
     echo "Downloading new game version: $VERSION from channel $CHANNEL..."
-    curl -# -o "$GAME_DIR/$GAME_ARCHIVE" "$GAME_URL/$GAME_ARCHIVE"
+    curl -# -o "$GAME_VERSION_DIR/$GAME_ARCHIVE" "$GAME_URL/$GAME_ARCHIVE"
 
     echo "Extracting game files..."
-    tar xzf "$GAME_DIR/$GAME_ARCHIVE" -C "$GAME_DIR"
-    chmod +x "$GAME_DIR/server.sh"
+    tar xzf "$GAME_VERSION_DIR/$GAME_ARCHIVE" -C "$GAME_VERSION_DIR"
+    chmod +x "$GAME_VERSION_DIR/server.sh"
 else
     echo "Game version $VERSION already downloaded."
 fi
 
-# Ensure correct paths in server.sh
-sed -i "s|^USERNAME='.*'|USERNAME='vintagestory'|" "$GAME_DIR/server.sh"
-sed -i "s|^VSPATH='.*'|VSPATH='$GAME_DIR'|" "$GAME_DIR/server.sh"
-sed -i "s|^DATAPATH='.*'|DATAPATH='$DATA_DIR'|" "$GAME_DIR/server.sh"
+sed -i "s|^USERNAME='.*'|USERNAME='$(whoami)'|" "$GAME_VERSION_DIR/server.sh"
+sed -i "s|^VSPATH='.*'|VSPATH='$GAME_VERSION_DIR'|" "$GAME_VERSION_DIR/server.sh"
+sed -i "s|^DATAPATH='.*'|DATAPATH='$SERVER_FILES_DIR'|" "$GAME_VERSION_DIR/server.sh"
 
 tail_log() {
     echo "Tailing the log file: $LOG_FILE"
     tail -F "$LOG_FILE"
 }
 
-# Start server
 echo "Starting server..."
-"$GAME_DIR/server.sh" start &
+"$GAME_VERSION_DIR/server.sh" start &
 
 # Wait for log file creation
 while [ ! -f "$LOG_FILE" ]; do
