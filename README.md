@@ -8,6 +8,9 @@ The image also supports running unstable versions of the game using the `CHANNEL
 ## Image
 The image and it's tags are found here: https://hub.docker.com/repository/docker/neebz/vintage-story-server/general
 
+Version `2026.05.10-1` and later have been updated to dotnet 10 to follow the game version >= 1.22. If you want to play < 1.21 you should stay on tag `2025.07.28-1`.
+Note that this version does NOT support the `CHANNEL` environment variable, and it requires the Docker Run `user` to be 1000. Version `2026.05.10-1` is updated to mount both download and server files to game files with a bind mount to ensure user privileges work as intended.
+
 Version `2025.07.28-1` and later have been updated to dotnet 8 to follow the game version >= 1.21.
 If you want to play < 1.21 you should stay on tag `2025.04.14-1`. Note that this version does NOT support the `CHANNEL` environment variable.
 
@@ -23,14 +26,12 @@ services:
       - "42420:42420/tcp"
       - "42420:42420/udp"
     volumes:
-      - /path/on/host:/app/data
-      - vintage-story-game-files:/app/server  # Docker-managed named volume
+      - path-on-host/server_files:/app/server_files
+      - path-on-host/game_files:/app/game_files
     environment:
-      - VERSION=1.21.0-rc.1
-      - CHANNEL=unstable
+      - VERSION=1.22.2
+      - CHANNEL=stable
     user: "1000:1000"
-volumes:
-  vintage-story-game-files:
 ```
 
 ### Running with docker run
@@ -39,10 +40,10 @@ docker run -d \
   --name vintage_story \
   -p 42420:42420/tcp \
   -p 42420:42420/udp \
-  -v /path/on/host:/app/data \
-  -v vintage-story-game-files:/app/server \
-  -e VERSION=1.21.0-rc.1 \
-  -e CHANNEL=unstable \
+  -v /path-on-host/server_files:/app/server_files \
+  -v /path-on-host/game_files:/app/game_files \
+  -e VERSION=1.22.2 \
+  -e CHANNEL=stable \
   --user 1000:1000 \
   neebz/vintage-story-server:latest
 ```
