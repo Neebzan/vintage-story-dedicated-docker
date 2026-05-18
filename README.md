@@ -16,7 +16,7 @@ Version `2025.07.28-1` and later have been updated to dotnet 8 to follow the gam
 If you want to play < 1.21 you should stay on tag `2025.04.14-1`. Note that this version does NOT support the `CHANNEL` environment variable.
 
 ## Setup
-The setup requires a directory for the saves file, config files and logs to be defined, as well as a user with write access to this directory. That user's UID and GID must be set in the user parameter for the container. The mount should target `app/data`.
+The setup requires a directory for the game files and server files (which includes saves files, config files and logs) to be defined before starting the container, as well as a user with write access to this directory. That user's UID and GID must be set in the user parameter for the container. The mounts should target `/app/server_files` and `/app/game_files`.
 
 ### Running with compose
 ```
